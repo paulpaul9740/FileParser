@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	}
 	std::string dirs{ argv[1] }, outFileName{ argv[2] };
 	std::vector<std::thread> threadPool;
-	int threadCount = std::thread::hardware_concurrency() == 0 ? 4 : std::thread::hardware_concurrency() * 2;
+	int threadCount = std::thread::hardware_concurrency() == 0 ? 4 : std::thread::hardware_concurrency();
 	std::queue<std::string> outQueue, taskQueue;
 	std::mutex taskMutex, outMutex;
 	std::condition_variable cond;
