@@ -2,7 +2,6 @@
   Cmake >=3.0.2
   g++ with c++17
 # Build:
-  cmake .
-  make
+  cmake . && make
 # Usage:
 ./FileParser pathToDirs outputFileName 
