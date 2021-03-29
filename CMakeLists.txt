@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 3.0.2)
 set(CMAKE_VERBOSE_MAKEFILE ON)
-project (TEST)
+project (FileParser)
 find_package( Threads )
-add_executable(test main.cpp FileReader.cpp ThreadWorker.cpp Writer.cpp)
-set_property(TARGET test PROPERTY CXX_STANDARD 17)
-target_link_libraries( test ${CMAKE_THREAD_LIBS_INIT} )
+add_executable(FileParser main.cpp FileReader.cpp ThreadWorker.cpp Writer.cpp)
+set_property(TARGET FileParser PROPERTY CXX_STANDARD 17)
+target_link_libraries( FileParser ${CMAKE_THREAD_LIBS_INIT} )
 
