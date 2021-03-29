@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <iostream>
 #include <thread>
+#include <algorithm>
 namespace fs = std::filesystem;
 int main(int argc, char *argv[]) {
 	if (argc != 3) {
@@ -12,7 +13,8 @@ int main(int argc, char *argv[]) {
 	}
 	std::string dirs{ argv[1] }, outFileName{ argv[2] };
 	std::vector<std::thread> threadPool;
-	int threadCount = std::thread::hardware_concurrency() == 0 ? 4 : std::thread::hardware_concurrency();
+	constexpr unsigned int MIN_THREADS = 4;
+	int threadNumber = std::max(std::thread::hardware_concurrency(),MIN_THREADS);
 	std::queue<std::string> outQueue, taskQueue;
 	std::mutex taskMutex, outMutex;
 	std::condition_variable cond;
@@ -25,8 +27,8 @@ int main(int argc, char *argv[]) {
 	Writer writer{ outFileName, outQueue, outMutex, cond };
 	std::thread writerThread{ &Writer::writeThread, &writer, std::ref(write) };
 	ThreadWorker worker{ taskQueue, outQueue, taskMutex, outMutex, cond};
-	std::cout << "Creating worker threads, threadCount = " << threadCount << std::endl;
-	for (int i = 0 ; i < threadCount; ++i) {
+	std::cout << "Creating worker threads, threadNumber = " << threadNumber << std::endl;
+	for (int i = 0 ; i < threadNumber; ++i) {
 		threadPool.push_back(std::thread{ &ThreadWorker::start, &worker });
 	}
 	std::cout << "Workers are running..." << std::endl;
