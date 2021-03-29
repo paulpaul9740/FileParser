@@ -2,6 +2,7 @@
 #include <string>
 #include <queue>
 #include <mutex>
+#include <condition_variable>
 class ThreadWorker
 {
 public:

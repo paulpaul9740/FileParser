@@ -3,6 +3,7 @@
 #include <queue>
 #include <mutex>
 #include <fstream>
+#include <condition_variable>
 class Writer
 {
 public:

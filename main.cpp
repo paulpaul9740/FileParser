@@ -3,6 +3,7 @@
 #include "ThreadWorker.h"
 #include <filesystem>
 #include <iostream>
+#include <thread>
 namespace fs = std::filesystem;
 int main(int argc, char *argv[])
 {

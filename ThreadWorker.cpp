@@ -1,6 +1,6 @@
 #include "ThreadWorker.h"
 #include "FileReader.h"
-#pragma once
+#include <memory>
 ThreadWorker::ThreadWorker(std::queue<std::string>& taskQueue, std::queue<std::string>& outQueue, std::mutex& taskMutex, std::mutex& outMutex, std::condition_variable& cond) :
 		_taskQueue{ taskQueue }, _taskMutex{ taskMutex }, _outQueue{ outQueue }, _outMutex{ outMutex }, _cond{ cond }
 	{
