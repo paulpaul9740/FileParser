@@ -1,3 +1,8 @@
-# TestTask
-# C++17 and thread requried
-# Usage: ./appname pathToDirs outputFileName 
+# Requirements:
+  Cmake >=3.0.2
+  g++ with c++17
+# Build:
+  cmake .
+  make
+# Usage:
+./FileParser pathToDirs outputFileName 
