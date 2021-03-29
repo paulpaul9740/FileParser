@@ -9,25 +9,23 @@
 		}
 		std::cout << "Writer created" << std::endl;
 	}
-	void Writer::writeThread()
+	void Writer::writeThread(bool &work)
 	{
 
-		while (true)
+		while (work)
 		{
 			std::string data;
+			std::unique_lock<std::mutex> lock{ _outMutex };
+			_cond.wait(lock);
+			
+			while (not _outQueue.empty())
 			{
-				std::unique_lock<std::mutex> lock{ _outMutex };
-				_cond.wait_for(lock, std::chrono::milliseconds(1));
-				if (_outQueue.empty())
-				{
-					lock.unlock();
-					return;
-				}
 				data = std::move(_outQueue.front());
 				_outQueue.pop();
 				lock.unlock();
+				_file << data;
+				lock.lock();
 			}
-			_file << data;
 		}
 	}
 	Writer::~Writer() {

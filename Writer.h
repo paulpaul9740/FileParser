@@ -8,7 +8,7 @@ class Writer
 {
 public:
 	Writer(const std::string& filename, std::queue<std::string>& outQueue, std::mutex& outMutex, std::condition_variable& cond);
-	void writeThread();
+	void writeThread(bool& work);
 	~Writer();
 
 private:

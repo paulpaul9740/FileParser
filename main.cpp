@@ -24,8 +24,9 @@ int main(int argc, char *argv[])
 		taskQueue.push(entry.path().string());
 	}
 	std::cout << "Done!" << std::endl;
+	bool write = true;
 	Writer writer{ outFileName, outQueue, outMutex, cond };
-	std::thread writerThread{ &Writer::writeThread, &writer };
+	std::thread writerThread{ &Writer::writeThread, &writer,std::ref(write) };
 	ThreadWorker worker{ taskQueue, outQueue, taskMutex, outMutex, cond};
 	std::cout << "Creating worker threads, threadCount = " << threadCount << std::endl;
 	for (int i = 0 ; i < threadCount; ++i)
@@ -38,6 +39,8 @@ int main(int argc, char *argv[])
 		it->join();
 	}
 	std::cout << "Workers stopped" << std::endl;
+	write = false;
+	cond.notify_one();
 	writerThread.join();
 	std::cout << "Writer stopped, check the " <<outFileName << " for results." << std::endl;
 	return 0;
